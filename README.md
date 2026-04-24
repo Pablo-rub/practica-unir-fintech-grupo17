@@ -15,14 +15,14 @@ python3 main.py <filename> <dup>
 ## Ejecución de prueba
 
 ```bash
-python3 main.py prueba.txt yes
+python3 main.py words.txt yes
 ```
 
-Salida esperada (si no existe prueba.txt):
+Salida esperada (si no existe words.txt):
 
 ```text
-Se leerán las palabras del fichero prueba.txt
-El fichero prueba.txt no existe
+Se leerán las palabras del fichero words.txt
+El fichero words.txt no existe
 ['gryffindor', 'hufflepuff', 'ravenclaw', 'slytherin']
 ```
 
@@ -31,10 +31,10 @@ En caso contrario, se mostrarán las del fichero.
 ## Ejecución de prueba con Docker
 
 ```bash
-docker run --rm --volume `pwd`:/opt/app --env PYTHON_PATH=/opt/app -w /opt/app python:3.6-slim python3 main.py words.txt yes
+make run
 ```
 
-Salida esperada:
+Salida del programa:
 
 ```text
 Se leerán las palabras del fichero words.txt
