@@ -8,6 +8,7 @@ import sys
 
 DEFAULT_FILENAME = "words.txt"
 DEFAULT_DUPLICATES = False
+DEFAULT_ASCENDING = True
 
 
 def sort_list(items, ascending=True):
@@ -21,16 +22,35 @@ def remove_duplicates_from_list(items):
     return list(set(items))
 
 
+def parse_cli_args(args):
+    if len(args) != 4:
+        print("Se debe indicar el fichero como primer argumento")
+        print("El segundo argumento indica si se quieren eliminar duplicados (yes|no)")
+        print("El tercer argumento indica el orden (asc|desc)")
+        sys.exit(1)
+
+    filename = args[1]
+
+    remove_duplicates_arg = args[2].lower()
+    if remove_duplicates_arg not in ("yes", "no"):
+        print("El segundo argumento debe ser yes o no")
+        sys.exit(1)
+    remove_duplicates = remove_duplicates_arg == "yes"
+
+    sort_order_arg = args[3].lower()
+    if sort_order_arg not in ("asc", "desc"):
+        print("El tercer argumento debe ser asc o desc")
+        sys.exit(1)
+    ascending = sort_order_arg == "asc"
+
+    return filename, remove_duplicates, ascending
+
+
 if __name__ == "__main__":
     filename = DEFAULT_FILENAME
     remove_duplicates = DEFAULT_DUPLICATES
-    if len(sys.argv) == 3:
-        filename = sys.argv[1]
-        remove_duplicates = sys.argv[2].lower() == "yes"
-    else:
-        print("Se debe indicar el fichero como primer argumento")
-        print("El segundo argumento indica si se quieren eliminar duplicados")
-        sys.exit(1)
+    ascending_order = DEFAULT_ASCENDING
+    filename, remove_duplicates, ascending_order = parse_cli_args(sys.argv)
 
     print(f"Se leerán las palabras del fichero {filename}")
     file_path = os.path.join(".", filename)
@@ -46,4 +66,4 @@ if __name__ == "__main__":
     if remove_duplicates:
         word_list = remove_duplicates_from_list(word_list)
 
-    print(sort_list(word_list))
+    print(sort_list(word_list, ascending_order))
